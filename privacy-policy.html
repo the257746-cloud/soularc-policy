@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,23 +13,23 @@
         --text: rgba(255, 255, 255, 0.92);
         --muted: rgba(255, 255, 255, 0.72);
         --border: rgba(255, 255, 255, 0.14);
-        --accent: #ff2d2d;
-        --accent2: #b80f0f;
-        --shadow: rgba(0, 0, 0, 0.45);
+        --accent: #6ee7ff;
+        --accent2: #a78bfa;
+        --shadow: rgba(0, 0, 0, 0.35);
         --max: 920px;
         --radius: 16px;
       }
 
       @media (prefers-color-scheme: light) {
         :root {
-          --bg: #f6f7fb;
-          --card: rgba(0, 0, 0, 0.03);
-          --text: rgba(0, 0, 0, 0.88);
-          --muted: rgba(0, 0, 0, 0.64);
-          --border: rgba(0, 0, 0, 0.12);
-          --accent: #b80f0f;
-          --accent2: #ff2d2d;
-          --shadow: rgba(0, 0, 0, 0.08);
+          --bg: #000000;
+          --card: rgba(255, 255, 255, 0.06);
+          --text: rgba(255, 255, 255, 0.92);
+          --muted: rgba(255, 255, 255, 0.72);
+          --border: rgba(255, 255, 255, 0.14);
+          --accent: #6ee7ff;
+          --accent2: #a78bfa;
+          --shadow: rgba(0, 0, 0, 0.35);
         }
       }
 
@@ -37,16 +38,10 @@
       body {
         margin: 0;
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-        background:
-          radial-gradient(1200px 800px at 10% 10%, rgba(255, 45, 45, 0.26), transparent 55%),
-          radial-gradient(900px 700px at 90% 0%, rgba(184, 15, 15, 0.22), transparent 55%),
-          radial-gradient(900px 700px at 80% 92%, rgba(255, 45, 45, 0.14), transparent 55%),
-          radial-gradient(1200px 900px at 50% 45%, rgba(255, 45, 45, 0.10), transparent 70%),
-          linear-gradient(180deg, rgba(255, 45, 45, 0.10), rgba(0, 0, 0, 0) 45%),
-          var(--bg);
+        line-height: 1.55;
+        overflow-x: clip;
         color: var(--text);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        background: var(--bg);
       }
 
       a { color: var(--accent); text-decoration: none; }
@@ -68,7 +63,7 @@
       .skip-link:focus { transform: translateY(0); }
 
       header {
-        padding: 44px 18px 18px;
+        padding: clamp(28px, 5vw, 44px) 16px 16px;
       }
 
       .container {
@@ -77,7 +72,7 @@
       }
 
       .hero {
-        background: linear-gradient(135deg, rgba(255, 45, 45, 0.20), rgba(184, 15, 15, 0.14));
+        background: linear-gradient(135deg, rgba(110, 231, 255, 0.14), rgba(167, 139, 250, 0.12));
         border: 1px solid var(--border);
         border-radius: var(--radius);
         padding: 22px;
@@ -104,7 +99,7 @@
       .meta b { color: var(--text); font-weight: 600; }
 
       main {
-        padding: 16px 18px 46px;
+        padding: 16px 16px 46px;
       }
 
       .layout {
@@ -121,8 +116,7 @@
       }
 
       nav {
-        position: sticky;
-        top: 14px;
+        position: static;
         background: var(--card);
         border: 1px solid var(--border);
         border-radius: var(--radius);
@@ -130,13 +124,50 @@
         box-shadow: 0 10px 32px var(--shadow);
       }
 
-      nav h2 {
-        margin: 0 0 10px;
+      details.toc {
+        border-radius: calc(var(--radius) - 2px);
+      }
+
+      details.toc summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 2px 2px;
+        user-select: none;
+      }
+
+      details.toc summary::-webkit-details-marker { display: none; }
+
+      details.toc summary span {
+        margin: 0;
         font-size: 14px;
         letter-spacing: 0.02em;
         color: var(--muted);
         text-transform: uppercase;
+        font-weight: 600;
       }
+
+      details.toc summary .chev {
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid var(--muted);
+        border-bottom: 2px solid var(--muted);
+        transform: rotate(45deg);
+        transition: transform 160ms ease;
+        flex: 0 0 auto;
+      }
+
+      details.toc[open] summary .chev {
+        transform: rotate(-135deg);
+      }
+
+      details.toc .toc-body {
+        padding-top: 10px;
+      }
+
       nav ol {
         margin: 0;
         padding-left: 18px;
@@ -151,6 +182,26 @@
         border-radius: var(--radius);
         padding: 18px;
         box-shadow: 0 10px 32px var(--shadow);
+        overflow-wrap: anywhere;
+      }
+
+      .hero, nav, article { min-width: 0; }
+
+      @media (max-width: 520px) {
+        .hero { padding: 16px; }
+        article { padding: 16px; }
+        nav { padding: 12px; }
+        nav ol { padding-left: 18px; }
+        .footer-card { padding: 12px 12px; }
+      }
+
+      @media (min-width: 980px) {
+        nav {
+          position: sticky;
+          top: 14px;
+        }
+        details.toc summary { cursor: default; }
+        details.toc summary .chev { display: none; }
       }
 
       section { scroll-margin-top: 18px; }
@@ -170,7 +221,7 @@
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 12px 12px;
-        background: rgba(255, 45, 45, 0.10);
+        background: rgba(110, 231, 255, 0.08);
         color: var(--text);
       }
       .note b { color: var(--text); }
@@ -216,7 +267,7 @@
           <div class="meta">
             <div><b>Company / Website:</b> SoulArc Studios</div>
             <div><b>Effective date:</b> 28 December 2025</div>
-            <div><b>Contact:</b> <a href="mailto:soularc4help@gmail.com">ssoularc4help@gmail.com</a></div>
+            <div><b>Contact:</b> <a href="mailto:soularc4help@gmail.com">soularc4help@gmail.com</a></div>
           </div>
         </div>
       </div>
@@ -226,21 +277,28 @@
       <div class="container">
         <div class="layout">
           <nav aria-label="Table of contents">
-            <h2>Contents</h2>
-            <ol>
-              <li><a href="#information-we-collect">Information we collect</a></li>
-              <li><a href="#how-we-use">How we use your information</a></li>
-              <li><a href="#disclosure">Disclosure to third parties</a></li>
-              <li><a href="#user-accounts">User accounts</a></li>
-              <li><a href="#security">Data security</a></li>
-              <li><a href="#retention">Data retention</a></li>
-              <li><a href="#children">Children’s privacy</a></li>
-              <li><a href="#changes">Changes to this policy</a></li>
-              <li><a href="#contact">Contact us</a></li>
-            </ol>
-            <div class="note small" role="note">
-              <b>Tip:</b> Review the sections to ensure they match your app’s current data flows and third-party services.
-            </div>
+            <details class="toc">
+              <summary>
+                <span>Contents</span>
+                <span class="chev" aria-hidden="true"></span>
+              </summary>
+              <div class="toc-body">
+                <ol>
+                  <li><a href="#information-we-collect">Information we collect</a></li>
+                  <li><a href="#how-we-use">How we use your information</a></li>
+                  <li><a href="#disclosure">Disclosure to third parties</a></li>
+                  <li><a href="#user-accounts">User accounts</a></li>
+                  <li><a href="#security">Data security</a></li>
+                  <li><a href="#retention">Data retention</a></li>
+                  <li><a href="#children">Children’s privacy</a></li>
+                  <li><a href="#changes">Changes to this policy</a></li>
+                  <li><a href="#contact">Contact us</a></li>
+                </ol>
+                <div class="note small" role="note">
+                  <b>Tip:</b> Review the sections to ensure they match your app’s current data flows and third-party services.
+                </div>
+              </div>
+            </details>
           </nav>
 
           <article>
@@ -287,7 +345,7 @@
                 <li>Users can create accounts using email authentication.</li>
                 <li>
                   To update or delete your account, log in to account settings or contact us at
-                  <a href="mailto:soularc4help@gmail.com">soularc4help@gmail.com.com</a>.
+                  <a href="mailto:soularc4help@gmail.com">soularc4help@gmail.com</a>.
                 </li>
               </ul>
             </section>
@@ -343,9 +401,18 @@
       (function () {
         var yearEl = document.getElementById('year');
         if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+        var toc = document.querySelector('details.toc');
+        if (!toc) return;
+
+        var mq = window.matchMedia('(min-width: 980px)');
+        var sync = function () {
+          if (mq.matches) toc.open = true;
+        };
+        sync();
+        if (mq.addEventListener) mq.addEventListener('change', sync);
+        else mq.addListener(sync);
       })();
     </script>
   </body>
 </html>
-
-
